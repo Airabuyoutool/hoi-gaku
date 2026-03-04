@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホイ学 - 保育学生応援アプリ</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7ba293">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- スプラッシュ画面 -->
+    <div id="splash" class="splash-screen">
+        <div class="logo-container">
+            <svg class="baby-icon" viewBox="0 0 100 100" width="120" height="120">
+                <circle cx="50" cy="50" r="40" fill="#FFDAB9" />
+                <circle cx="50" cy="40" r="4" fill="#3b3b3b" />
+                <rect x="25" y="45" width="20" height="15" rx="5" fill="none" stroke="#3b3b3b" stroke-width="2"/>
+                <rect x="55" y="45" width="20" height="15" rx="5" fill="none" stroke="#3b3b3b" stroke-width="2"/>
+                <line x1="45" y1="52" x2="55" y2="52" stroke="#3b3b3b" stroke-width="2"/>
+                <circle cx="35" cy="52" r="2" fill="#3b3b3b" />
+                <circle cx="65" cy="52" r="2" fill="#3b3b3b" />
+                <path d="M40 70 Q50 80 60 70" fill="none" stroke="#e08da2" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <h1 class="brand-name">ホイ学</h1>
+            <p class="tagline">保育学生応援アプリ</p>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <svg class="mini-logo" viewBox="0 0 100 100" width="30" height="30">
+                <circle cx="50" cy="50" r="45" fill="#FFDAB9" />
+                <rect x="25" y="45" width="20" height="12" rx="4" fill="none" stroke="#333" stroke-width="3"/>
+                <rect x="55" y="45" width="20" height="12" rx="4" fill="none" stroke="#333" stroke-width="3"/>
+            </svg>
+            <h1>ホイ学</h1>
+        </div>
+    </header>
+    
+    <nav class="app-nav">
+        <button id="tab-dictionary" class="nav-btn active">辞書</button>
+        <button id="tab-test" class="nav-btn">テスト</button>
+        <button id="tab-about" class="nav-btn">About</button>
+    </nav>
+    
+    <main>
+        <div id="dictionary-view" class="view-section active-view">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="用語・場面を検索...">
+            </div>
+            <div id="results" class="results-container"></div>
+        </div>
+
+        <div id="test-view" class="view-section">
+            <div class="progress-wrapper">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text" id="progress-text">0 / 0</div>
+            </div>
+
+            <div class="test-controls">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="review-focus-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">苦手な問題に集中</span>
+            </div>
+
+            <div class="flashcard-scene">
+                <div id="flashcard" class="flashcard">
+                    <div class="card-face card-front">
+                        <div class="card-category" id="fc-category">カテゴリー</div>
+                        <div class="card-question" id="fc-question">問題内容</div>
+                        <div class="tap-hint">タップでめくる</div>
+                    </div>
+                    <div class="card-face card-back">
+                        <div class="answer-scroll-area">
+                            <div class="hint-block test-hint">
+                                <h4>考え方のヒント</h4>
+                                <p id="fc-hint"></p>
+                            </div>
+                            <div class="answer-block">
+                                <h4>正解</h4>
+                                <p id="fc-answer"></p>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button id="btn-mark" class="action-btn secondary-btn">⚠️ 苦手</button>
+                            <button id="btn-next" class="action-btn primary-btn">次へ ➔</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="about-view" class="view-section">
+            <div class="about-card">
+                <h2>頑張る保育学生のための、<br>キミだけの辞書アプリ。</h2>
+                <p>「ホイ学」は、実習や試験勉強で忙しい保育学生をサポートするために生まれました。</p>
+                <div class="feature-list">
+                    <div class="feature-item">📱 オフライン対応 (電波の弱い園内でも安心)</div>
+                    <div class="feature-item">💡 日誌に書ける「着眼点」ヒント</div>
+                    <div class="feature-item">🏠 ホーム画面に追加してすぐ起動</div>
+                </div>
+                <p class="version">Version 1.0.0</p>
+                <p style="margin-top:20px; font-size: 0.8rem; color: #999;">© 2026 ホイ学 Project</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered', reg))
+                    .catch(err => console.log('SW Registration Failed', err));
+            });
+        }
+        
+        // スプラッシュ画面の制御
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                splash.style.opacity = '0';
+                setTimeout(() => { splash.style.display = 'none'; }, 500);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

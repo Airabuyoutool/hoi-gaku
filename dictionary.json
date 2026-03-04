@@ -1,0 +1,62 @@
+[
+    {
+        "term": "午睡",
+        "reading": "ごすい",
+        "scene": "休息",
+        "meaning": "昼寝のこと。保育園では主に昼食後に行われる休息の時間。",
+        "hint": "Consider if the child fell asleep peacefully, observe their sleeping posture, and try looking at their mood upon waking up.",
+        "points": [
+            "呼吸のリズム",
+            "寝具の安全性",
+            "室温・湿度の適切さ"
+        ]
+    },
+    {
+        "term": "粗大運動",
+        "reading": "そだいうんどう",
+        "scene": "遊び",
+        "meaning": "歩く、走る、跳ぶなど、全身の大きな筋肉を使った運動のこと。",
+        "hint": "Consider new movements they've mastered, and try looking at the dynamic ways they use their body during play.",
+        "points": [
+            "バランス感覚",
+            "筋力の変化",
+            "意欲的な挑戦"
+        ]
+    },
+    {
+        "term": "受容",
+        "reading": "じゅよう",
+        "scene": "関わり",
+        "meaning": "子どものありのままの感情や姿を受け止めること。",
+        "hint": "Consider the child's feeling behind the tantrum, and try looking at the change in their tone after being accepted.",
+        "points": [
+            "共感的な言葉がけ",
+            "表情の柔らかさ",
+            "心の充足感"
+        ]
+    },
+    {
+        "term": "共食",
+        "reading": "きょうしょく",
+        "scene": "食事",
+        "meaning": "誰かと一緒に楽しく食事をすること。",
+        "hint": "Consider the atmosphere of the table, and try looking at the social interactions occurring over the meal.",
+        "points": [
+            "会話の有無",
+            "食事の意欲",
+            "マナーへの意識"
+        ]
+    },
+    {
+        "term": "見立て遊び",
+        "reading": "みたてあそび",
+        "scene": "遊び",
+        "meaning": "あるものを別のものに見立てて遊ぶこと。",
+        "hint": "Consider what objects they chose, and try looking at the complexity of the scenarios they create.",
+        "points": [
+            "想像力の豊かさ",
+            "他児との役割分担",
+            "言葉の選定"
+        ]
+    }
+]

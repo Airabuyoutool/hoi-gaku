@@ -1,0 +1,266 @@
+:root {
+    --primary-color: #7ba293;
+    --secondary-color: #f7f9f8;
+    --peach-bg: #FFDAB9;
+    --mint-bg: #E0FFF0;
+    --accent-color: #d68b96;
+    --text-color: #4a4a4a;
+    --card-bg: #ffffff;
+    --font-main: 'Noto Sans JP', sans-serif;
+    --font-title: 'Kosugi Maru', sans-serif;
+    --radius: 16px;
+    --shadow: 0 8px 30px rgba(0,0,0,0.05);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.8;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* スプラッシュ画面 */
+.splash-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--peach-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.logo-container {
+    text-align: center;
+}
+
+.brand-name {
+    font-family: var(--font-title);
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-top: 15px;
+}
+
+.tagline {
+    color: #8c8c8c;
+    font-weight: 500;
+}
+
+/* ヘッダー */
+header {
+    background-color: var(--card-bg);
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+header h1 {
+    font-family: var(--font-title);
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+/* ナビゲーション */
+.app-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    max-width: 600px;
+    margin: 10px auto 20px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius);
+    padding: 4px;
+    box-shadow: var(--shadow);
+}
+
+.nav-btn {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #999;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 12px;
+}
+
+.nav-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ビュー制御 */
+.view-section {
+    display: none;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+}
+
+.view-section.active-view {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 検索ボックス */
+.search-container {
+    margin-bottom: 20px;
+}
+
+#search-input {
+    width: 100%;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 30px;
+    box-shadow: var(--shadow);
+    outline: none;
+    font-size: 1rem;
+}
+
+/* 辞書カード */
+.term-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.term-title {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+}
+
+.term-reading {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.scene-tag {
+    font-size: 0.7rem;
+    background: var(--mint-bg);
+    color: var(--primary-color);
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.term-section { margin-top: 15px; }
+.term-section h4 { font-size: 0.85rem; color: #888; margin-bottom: 4px; }
+
+.hint-block {
+    background-color: #fff9f5;
+    border-left: 5px solid var(--accent-color);
+    padding: 15px;
+    border-radius: 0 10px 10px 0;
+    margin-top: 15px;
+    position: relative;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.observation-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.obs-item {
+    font-size: 0.75rem;
+    background: #fdfaf5;
+    border: 1px solid #eee;
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+
+/* フラッシュカード */
+.flashcard-scene {
+    width: 100%;
+    height: 420px;
+    perspective: 1000px;
+    margin: 20px 0;
+}
+
+.flashcard {
+    width: 100%; height: 100%;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.flashcard.is-flipped { transform: rotateY(180deg); }
+
+.card-face {
+    position: absolute;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.card-back { transform: rotateY(180deg); justify-content: space-between; text-align: left; }
+
+.tap-hint { position: absolute; bottom: 20px; left: 0; right: 0; color: #ccc; font-size: 0.8rem; }
+
+/* 進捗バー */
+.progress-wrapper { margin-bottom: 20px; }
+.progress-bar { height: 6px; background: #eee; border-radius: 3px; overflow: hidden; position: relative; }
+.progress-bar::after {
+    content: ''; position: absolute; left: 0; width: var(--progress, 0%); height: 100%; background: var(--primary-color); transition: 0.3s;
+}
+
+/* アバウト画面 */
+.about-card {
+    background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.feature-list { margin: 20px 0; }
+.feature-item { margin-bottom: 10px; padding: 10px; background: var(--mint-bg); border-radius: 10px; font-size: 0.9rem; }
+
+/* ボタン */
+.action-btn { width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; margin-top: 10px; }
+.primary-btn { background: var(--primary-color); color: white; }
+.secondary-btn { background: #f0f0f0; color: #666; }
+.secondary-btn.marked { background: #ffdce0; color: #d6334a; }

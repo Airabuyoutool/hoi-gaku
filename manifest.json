@@ -1,0 +1,22 @@
+{
+  "name": "ホイ学 - 保育学生応援アプリ",
+  "short_name": "ホイ学",
+  "description": "頑張る保育学生のための辞書＆テストアプリ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFDAB9",
+  "theme_color": "#7ba293",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192/7ba293/ffffff?text=ホイ学",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512/7ba293/ffffff?text=ホイ学",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
