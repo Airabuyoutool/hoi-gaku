@@ -100,24 +100,36 @@ function renderDictionary(data) {
             card.innerHTML = `
                 <div class="term-header">
                     <span class="term-reading">${item.reading}</span>
-                    <h2 class="term-title">${item.term}<span class="scene-tag">${item.category}</span></h2>
+                    <div class="term-title">${item.term}<span class="scene-tag">${item.category}</span></div>
                 </div>
-                <div class="term-section"><h4>意味</h4><p>${item.meaning}</p></div>
-                <div class="hint-block">
-                    <h4>日誌のヒント</h4>
-                    <p>${item.hint}</p>
-                    <button class="copy-btn">📋 コピー</button>
-                </div>
-                ${item.points && item.points.length > 0 ? `
-                <div class="term-section">
-                    <h4>着眼点</h4>
-                    <div class="observation-list">
-                        ${item.points.map(p => `<span class="obs-item">${p}</span>`).join('')}
+                <div class="term-content">
+                    <div class="term-section"><h4>意味</h4><p>${item.meaning}</p></div>
+                    <div class="hint-block">
+                        <h4>日誌のヒント</h4>
+                        <p>${item.hint}</p>
+                        <button class="copy-btn">📋 コピー</button>
                     </div>
-                </div>` : ''}
+                    ${item.points && item.points.length > 0 ? `
+                    <div class="term-section">
+                        <h4>着眼点</h4>
+                        <div class="observation-list">
+                            ${item.points.map(p => `<span class="obs-item">${p}</span>`).join('')}
+                        </div>
+                    </div>` : ''}
+                </div>
             `;
+            // アコーディオンの開閉イベント
+            card.onclick = () => {
+                const isOpen = card.classList.contains('is-open');
+                // 他のカードを閉じる場合はここに追加
+                card.classList.toggle('is-open');
+            };
+
             const copyBtn = card.querySelector('.copy-btn');
-            copyBtn.onclick = () => copyToClipboard(item.hint);
+            copyBtn.onclick = (e) => {
+                e.stopPropagation(); // アコーディオンの閉じる動きを防止
+                copyToClipboard(item.hint);
+            };
             resultsContainer.appendChild(card);
         });
 
@@ -210,9 +222,36 @@ function setupTabs() {
 }
 function setupFlashcard() {
     if (!flashcard) return;
-    flashcard.onclick = (e) => { if (!e.target.closest('.action-btn')) flashcard.classList.toggle('is-flipped'); };
-    document.getElementById('btn-next').onclick = (e) => { e.stopPropagation(); currentQuestionIndex++; if (currentQuestionIndex >= targetQuestions.length) startTest(); else showQuestion(); };
-    document.getElementById('btn-mark').onclick = (e) => { e.stopPropagation(); toggleMark(targetQuestions[currentQuestionIndex].id); updateMarkUI(); };
+    // 表側をクリックで裏返す
+    flashcard.onclick = (e) => {
+        if (!e.target.closest('.action-btn')) {
+            flashcard.classList.toggle('is-flipped');
+        }
+    };
+
+    // 「答えを見る」ボタン
+    const btnReveal = document.getElementById('btn-reveal');
+    const answerArea = document.getElementById('answer-reveal-area');
+    const revealControls = document.getElementById('after-reveal-controls');
+
+    btnReveal.onclick = (e) => {
+        e.stopPropagation();
+        btnReveal.classList.add('hidden');
+        answerArea.classList.remove('hidden');
+        revealControls.classList.remove('hidden-flex');
+    };
+
+    document.getElementById('btn-next').onclick = (e) => {
+        e.stopPropagation();
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= targetQuestions.length) startTest();
+        else showQuestion();
+    };
+    document.getElementById('btn-mark').onclick = (e) => {
+        e.stopPropagation();
+        toggleMark(targetQuestions[currentQuestionIndex].id);
+        updateMarkUI();
+    };
     const toggleFocus = document.getElementById('review-focus-toggle');
     if (toggleFocus) toggleFocus.onchange = startTest;
 }
@@ -229,9 +268,16 @@ function showQuestion() {
     const q = targetQuestions[currentQuestionIndex];
     document.getElementById('fc-category').textContent = q.category;
     document.getElementById('fc-question').textContent = q.question;
-    document.getElementById('fc-hint').textContent = q.hint || q.answer;
+    document.getElementById('fc-hint').textContent = q.hint || "ヒントはありません。考えてみよう！";
     document.getElementById('fc-answer').textContent = q.answer;
+    document.getElementById('fc-explanation').textContent = q.explanation || "詳しい解説を準備中です。";
+
+    // 状態をリセット
     flashcard.classList.remove('is-flipped');
+    document.getElementById('btn-reveal').classList.remove('hidden');
+    document.getElementById('answer-reveal-area').classList.add('hidden');
+    document.getElementById('after-reveal-controls').classList.add('hidden-flex');
+
     updateProgress();
     updateMarkUI();
 }
